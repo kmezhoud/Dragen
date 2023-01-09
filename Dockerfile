@@ -37,28 +37,28 @@ LABEL maintainer="kmezhoud@gmail.com"
 
 # ------------------------------------------------------------------------------
 # enable ssh login
-RUN yum -y install openssh-server ed openssh-clients tlog glibc-langpack-en && \
-    yum clean all && systemctl enable sshd;
+RUN yum -y install dnf openssh-server ed openssh-clients tlog glibc-langpack-en && \
+    dnf clean all && systemctl enable sshd;
 RUN sed -i 's/#Port.*$/Port 2022/' /etc/ssh/sshd_config && \
     chmod 775 /var/run && \
     rm -f /var/run/nologin
 RUN mkdir /etc/systemd/system/sshd.service.d/ && \
     echo -e '[Service]\nRestart=always' > /etc/systemd/system/sshd.service.d/sshd.conf
 
-RUN yum -y install systemd; yum clean all;
+RUN dnf -y install systemd; dnf clean all;
 
 # install network tools ifconfig
-RUN yum -y install net-tools
-#RUN yum update  && yum -y install sudo 
-#    && yum -y install awk \ 
-#    && yum -y install dirname \
-#    && yum -y install grep #\
-#    && yum -y install md5sum \
-#    && yum -y install rpm \
-#    && yum -y install sort \
-#    && yum -y install tr \
-#    && yum -y install logger \
-#    && yum -y install sed
+RUN dnf -y install net-tools
+#RUN dnf update  && dnf -y install sudo 
+#    && dnf -y install awk \ 
+#    && dnf -y install dirname \
+#    && dnf -y install grep #\
+#    && dnf -y install md5sum \
+#    && dnf -y install rpm \
+#    && dnf -y install sort \
+#    && dnf -y install tr \
+#    && dnf -y install logger \
+#    && dnf -y install sed
     #awk dirname grep md5sum rpm sort tr logger sed
 
 #RUN useradd -m docker && echo "docker:docker" | chpasswd && adduser docker sudo
