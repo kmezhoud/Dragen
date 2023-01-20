@@ -5,6 +5,8 @@
 ## Change the permissions of /var/run/docker.sock for the current user.
 #sudo chown $USER /var/run/docker.sock
 
+#sh  dragen-4.0.3-8.el7.x86_64.run --noexec --target Dragen_bkp
+
 
 ## Remove running processes
 #sudo aa-remove-unknown
@@ -16,6 +18,12 @@
 # docker build -t ol9_dragen:latest .
 # docker run -dit --name dragen ol9_dragen:latest
 
+## Build dragen server image
+#docker build -t ol8_ill_drag_el8:latest .
+#docker run -h ol8_illu_drag_el8 -i -t ol8_illu_drag_el8:latest bash
+
+#sudo docker build -t ol8_illu_drag_el8:latest .
+#docker run -d -P --name ol8_illu_drag_el8  ol8_illu_drag_el8:latest
 
 ## execute command from docker to conatiner
 ## docker exec -it ol7_slim_con ls
@@ -28,7 +36,8 @@
 # Set the base image to Oracle Linux 7 - Slim
 #FROM oraclelinux:9-slim
 #FROM oraclelinux:9
-FROM centos:7
+#FROM centos:7
+FROM ol8_illumina
 # File Author / Maintainer
 # Use LABEL rather than deprecated MAINTAINER
 # MAINTAINER Tim Hall (tim@oracle-base.com)
@@ -36,32 +45,25 @@ LABEL maintainer="kmezhoud@gmail.com"
 
 
 # ------------------------------------------------------------------------------
-# enable ssh login
-RUN yum -y install dnf openssh-server ed openssh-clients tlog glibc-langpack-en && \
-    dnf clean all && systemctl enable sshd;
-RUN sed -i 's/#Port.*$/Port 2022/' /etc/ssh/sshd_config && \
-    chmod 775 /var/run && \
-    rm -f /var/run/nologin
-RUN mkdir /etc/systemd/system/sshd.service.d/ && \
-    echo -e '[Service]\nRestart=always' > /etc/systemd/system/sshd.service.d/sshd.conf
+# enable ssh root login
+RUN apt-get -y update && \
+    apt-get install -y apt-utils && \
+    apt-get install -y vim && \
+    apt-get install -y openssh-server && \
+    echo 'root:mypassword' | chpasswd && \
+    sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
+    ssh-keygen -A;
 
-RUN dnf -y install systemd; dnf clean all;
 
 # install network tools ifconfig
-RUN dnf -y install net-tools
-#RUN dnf update  && dnf -y install sudo 
-#    && dnf -y install awk \ 
-#    && dnf -y install dirname \
-#    && dnf -y install grep #\
-#    && dnf -y install md5sum \
-#    && dnf -y install rpm \
-#    && dnf -y install sort \
-#    && dnf -y install tr \
-#    && dnf -y install logger \
-#    && dnf -y install sed
-    #awk dirname grep md5sum rpm sort tr logger sed
+#RUN apt-get -y install net-tools;
 
-#RUN useradd -m docker && echo "docker:docker" | chpasswd && adduser docker sudo
+# install rpm Python2
+#RUN apt-get install -y python2 && \
+#    apt-get -y install rpm;
+
+RUN apt-get clean all;
+    
 
 # ------------------------------------------------------------------------------
 # Define the build arguments, setting default values.
@@ -78,10 +80,14 @@ RUN mkdir -p ${ORACLE_HOME} && \
     mkdir -p ${DATA_LOCATION}
 
 
-COPY dragen-4.0.3-8.el7.x86_64.run /${ORACLE_HOME}
+#COPY dragen-4.0.3-8.el7.x86_64.run /${ORACLE_HOME}
+COPY dragen-4.0.3-8.el8.x86_64.run /${ORACLE_HOME}
 WORKDIR /${ORACLE_HOME}
 
 #CMD sudo sh dragen-4.0.3-8.el7.x86_64.run
 
 
-# End
+#EXPOSE 22
+# start sshr service
+ENTRYPOINT service ssh restart && bash
+CMD ["/usr/sbin/sshd", "-D"]
