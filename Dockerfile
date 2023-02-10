@@ -52,8 +52,13 @@ RUN apt-get -y update && \
     apt-get install -y openssh-server && \
     echo 'root:mypassword' | chpasswd && \
     sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
-    ssh-keygen -A;
-
+    ssh-keygen -t rsa
+    #Copy the public key to the remote systems that the UAA is managing:
+    #scp ~/.ssh/id_rsa.pub <remote machine>
+    #Log in to the remote systems and import the public key to the authorize keys.
+    #cat <Uploaded id_rsa.pub> >> ~/.ssh/authorized_keys
+    #or
+    # ssh-copy-id remote_host
 
 # install network tools ifconfig
 #RUN apt-get -y install net-tools;
