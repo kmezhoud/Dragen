@@ -5,8 +5,8 @@
 ## Change the permissions of /var/run/docker.sock for the current user.
 #sudo chown $USER /var/run/docker.sock
 
+# Extract installer file
 #sh  dragen-4.0.3-8.el7.x86_64.run --noexec --target Dragen_bkp
-
 
 ## Remove running processes
 #sudo aa-remove-unknown
@@ -14,19 +14,17 @@
 #sudo lsof -t -i:443
 #systemctl status docker
 
-####### Build and run ORACLE container
-# docker build -t ol9_dragen:latest .
-# docker run -dit --name dragen ol9_dragen:latest
-
-## Build dragen server image
+## Build  OL8 iso with dragen installer
 #docker build -t ol8_ill_drag_el8:latest .
-#docker run -h ol8_illu_drag_el8 -i -t ol8_illu_drag_el8:latest bash
 
-#sudo docker build -t ol8_illu_drag_el8:latest .
-#docker run -d -P --name ol8_illu_drag_el8  ol8_illu_drag_el8:latest
+## run image interactively
+# docker run -h ol8_illu_drag_el8 -i -t ol8_illu_drag_el8:latest bash
+## run it and detach
+# docker run dit --name ol8_illu_drag_el8  ol8_illu_drag_el8:latest
 
 ## execute command from docker to conatiner
-## docker exec -it ol7_slim_con ls
+## docker exec -it ol8_illu_drag_el8 ls
+## docker attach ol8_illu_drag_el8
 
 # ------------------------------------------------------------------------------
 # Dockerfile to build basic Oracle Linux container images
