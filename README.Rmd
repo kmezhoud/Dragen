@@ -56,3 +56,39 @@ docker image ls
 ```{eval = FALSE}
 ol8_illumina           latest    fe075c356df2   3 minutes ago   1.14GB
 ```
+
+## Customize `ol8_illumina` image with  Dragen installer, ssh access and others needed tools
+
+go to same folder where the [Dockerfile](https://github.com/kmezhoud/Dragen/tree/main/Dockerfile) and run the two commands. There ar two option to run the container: interactively or detached.
+In the same folder we need `dragen-4.0.3-8.el8.x86_64.run` installer that you can get from illumina download [page](https://support.illumina.com/sequencing/sequencing_software/dragen-bio-it-platform.html).
+
+```{bash eval=FALSE}
+docker build -t ol8_ill_drag_el8:latest .
+# run it interactively (-i)
+#you will prompted directly  to container terminal
+# root@ol8_illu_drag_el8:/home_dragen
+docker run -h ol8_illu_drag_el8 -i -t ol8_illu_drag_el8:latest bash
+
+#or detach the container from the terminal -d
+docker run -dit --name dragen ol8_illu_drag_el8:latest
+
+# list running container 
+docker container ls
+```
+
+```{}
+CONTAINER ID   IMAGE                      COMMAND                  CREATED          STATUS          PORTS     NAMES
+d7553c21ea9a   ol8_illu_drag_el8:latest   "/bin/sh -c 'service…"   29 seconds ago   Up 28 seconds             dragen
+```
+
+To execute command from running container
+
+```{bash eval=FALSE}
+docker exec -it dragen ls
+```
+
+To attach the running container 
+
+```{}
+docker attach dragen
+```
