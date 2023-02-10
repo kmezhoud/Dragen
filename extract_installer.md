@@ -44,7 +44,12 @@ Makeself version 2.4.2
   --                    Following arguments will be passed to the embedded script
 ```
 
+To extract the file we can:
+
 ``` bash
+sh  dragen-4.0.3-8.el7.x86_64.run --noexec --target Dragen.run
+# or
+chmod +x dragen-4.0.3-8.el8.x86_64.run
 ./dragen-4.0.3-8.el8.x86_64.run --target dragen.run
 ```
 
