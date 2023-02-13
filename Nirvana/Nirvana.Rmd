@@ -1,5 +1,5 @@
 ---
-title: " ' ' "
+title: ""
 #subtitle: "Clinical-grade variant annotation"
 author: "Karim Mezhoud"
 date: "`r Sys.Date()`"
@@ -244,7 +244,7 @@ genes[c(1:77)] |>
   )  %>% 
   bind_rows() %>%
   DT::datatable(options = list(scrollX = TRUE, autoWidth = TRUE,
-                               columnDefs = list(list(className = 'dt-center', targets = c(0,1, 2, 3, 4, 5,6,7)), list(width = '650px', targets = c(11, 14)))
+                               columnDefs = list(list(className = 'dt-center', targets = c(0,1, 2, 3, 4, 5,6,7, 12)), list(width = '650px', targets = c(11, 14)))
   ),
   rownames = FALSE
   ) #%>% 
