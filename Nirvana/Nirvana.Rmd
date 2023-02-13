@@ -9,10 +9,15 @@ output:
 #output: github_document
 #always_allow_html: true
 ---
-![](../doc/nirvana.png){align="right"}
+
+```{r setup, include=FALSE, echo=FALSE}
+knitr::opts_chunk$set(echo=TRUE, error=FALSE)
+```
+
+![](../doc/json_tibble.png){align="right"}
 
 
-# Parsing JSON output
+# JSON Structure
 
 ![](../doc/nirvana_json_anatomy.png){align="center"}
 
