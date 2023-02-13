@@ -11,7 +11,7 @@ Linux/Clonezilla OSs.
 
 The installer file like `dragen-4.0.3-8.el8.x86_64.run` is composed by
 [3
-files](https://github.com/kmezhoud/Dragen/tree/main/extract_installer.md):
+files](https://github.com/kmezhoud/Dragen/tree/main/extract_installer/extract_installer.md):
 
 - `edico_driver-1.4.7-4.0.3.el8.x86_64.rpm`,
 - `edico-4.0.3-15.el8.x86_64.rpm`, and
@@ -89,6 +89,6 @@ To attach the running container
 
     docker attach dragen
 
-<a href="https://github.com/kmezhoud/Dragen/Nirvana/Nirvana.html" target = "_blank">
+<a href="https://github.com/kmezhoud/Dragen/blob/main/Nirvana/Nirvana.html" target = "_blank">
 <img src="doc/json_tibble.png" align="left" height="74" width="272" title="Parsing JSON nirvana Output">
 </a>
