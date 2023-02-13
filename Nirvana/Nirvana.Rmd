@@ -15,7 +15,17 @@ knitr::opts_chunk$set(echo=TRUE, error=FALSE)
 ```
 
 ![](../doc/json_tibble.png){align="right"}
+&nbsp;
 
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
 
 # JSON Structure
 

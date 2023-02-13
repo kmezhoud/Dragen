@@ -9,13 +9,13 @@ Linux/Clonezilla OSs.
 
 ## How to extract Installer file from `.Run` file
 
-<a href="https://github.com/kmezhoud/Dragen/Nirvana/Nirvana.html" target = "_blank">
+<a href="https://github.com/kmezhoud/Dragen/blob/main/extract_installer/extract_installer.md" target = "_blank">
 <img src="doc/untar_Dragen.png" align="right" height="100" width="100" title="Parsing JSON nirvana Output">
 </a>
 
 The installer file like `dragen-4.0.3-8.el8.x86_64.run` is composed by
 [3
-files](https://github.com/kmezhoud/Dragen/tree/main/extract_installer/extract_installer.md):
+files](https://github.com/kmezhoud/Dragen/blob/main/extract_installer/extract_installer.md):
 
 - `edico_driver-1.4.7-4.0.3.el8.x86_64.rpm`,
 - `edico-4.0.3-15.el8.x86_64.rpm`, and
@@ -23,7 +23,7 @@ files](https://github.com/kmezhoud/Dragen/tree/main/extract_installer/extract_in
 
 ## Parsing `Json` file to `tibble`
 
-<a href="https://github.com/kmezhoud/Dragen/Nirvana/Nirvana.html" target = "_blank">
+<a href="https://kmezhoud.github.io/Dragen/Nirvana/Nirvana.html" target = "_blank">
 <img src="doc/json_tibble.png" align="right" height="74" width="272" title="Parsing JSON nirvana Output">
 </a>
 
