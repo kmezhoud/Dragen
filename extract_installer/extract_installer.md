@@ -1,6 +1,10 @@
 
 # Extract files from `.run` installer
 
+<a href="https://github.com/kmezhoud/Dragen/extract_installer/extract_installer.md" target = "_blank">
+<img src="../doc/untar_Dragen.png" align="left" height="74" width="272" title="Parsing JSON nirvana Output">
+</a>
+
 ``` bash
 wget https://webdata.illumina.com/downloads/software/dragen/dragen-4.0.3-8.el8.x86_64.run
 # dragen-4.0.3-8.el8.x86_64.run
