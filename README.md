@@ -89,6 +89,6 @@ To attach the running container
 
     docker attach dragen
 
-<a href="https://kmezhoud.github.io/Dragen/Nirvana/Nirvana.html" target = "_blank">
-<img src="doc/nirvana.png" align="left" height="250" width="250" title="Parsing JSON nirvana Output">
+<a href="https://github.com/kmezhoud/Dragen/blob/main/Nirvana/Nirvana.html" target = "_blank">
+<img src="doc/json_tibble.png" align="left" height="74" width="272" title="Parsing JSON nirvana Output">
 </a>
