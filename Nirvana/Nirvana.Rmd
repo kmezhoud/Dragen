@@ -1,14 +1,28 @@
 ---
-title: ""
+title: "Convert JSON Nirvana Output to data Tibble"
 #subtitle: "Clinical-grade variant annotation"
 author: "Karim Mezhoud"
 date: "`r Sys.Date()`"
 output: 
   html_document:
     code_folding: hide
+    toc: true
+    number_sections: true
+    fig_caption: true
+    highlight: tango
+    theme: cosmo
 #output: github_document
 #always_allow_html: true
 ---
+
+<style type="text/css">
+.main-container {
+  max-width: 1800px !important;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+
 
 ```{r setup, include=FALSE, echo=FALSE}
 knitr::opts_chunk$set(echo=TRUE, error=FALSE)
@@ -217,7 +231,7 @@ positions[c(1:10,163,163 , 237,  288, 397,  572) ] %>%
            {
              if(c("variants.transcripts_consequence") %in% names(.)) unnest(., cols = c(variants.transcripts_consequence), names_sep="_") else .
            } )|>
-  dplyr::bind_rows(.id = "column_label") |>
+  dplyr::bind_rows(.id = "rownames") |>
   DT::datatable(options = list(scrollX = TRUE#,
                                #columnDefs = list(list(className = 'dt-center', targets = c(0, 25)))
   ),
@@ -244,11 +258,13 @@ genes[c(1:77)] |>
   )  %>% 
   bind_rows() %>%
   DT::datatable(options = list(scrollX = TRUE, autoWidth = TRUE,
-                               columnDefs = list(list(className = 'dt-center', targets = c(0,1, 2, 3, 4, 5,6,7, 12)), list(width = '650px', targets = c(11, 14)))
+                               columnDefs = list(list(className = 'dt-center', targets = "_all"), 
+                                                 list(width = '650px', targets= list(11,  14)),
+                                                 list(width = '200px', targets= list(9,  10)))
   ),
   rownames = FALSE
   ) #%>% 
-  #DT::formatStyle(columns = c(9,10), width='100px')
+  #DT::formatStyle(columns = c(11, 14), width='650px')
 
 
 ```
