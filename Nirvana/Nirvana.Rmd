@@ -465,9 +465,10 @@ positions[c(1:10,163,163 , 237,  288, 397,  572) ] %>%
 
 ## Convert Genes Object to Tibble
 
-* After the `positions` lines, there are the `gens`lines, which are optional if there is no overlapping gene of the input `VCF` variants (3 lines for 2 genes in th example)
+* After the `positions` lines, there are the `genes` lines, which are optional if there is no overlapping gene of the input `VCF` variants (3 lines for 2 genes in th example)
 
 ![](../doc/json_genes.png)
+
 
 
 ```{r}
@@ -497,6 +498,12 @@ genes[c(1:77)] |>
 
 
 ```
+
+## Look for intersection between `Positions` and `Genes` Objects
+
+* The column `variants.transcripts_hgnc` in `Positions` object has commun parttern with `name` column in `genes` object. 
+
+* We mutate a new column named `__Accession__` to extract only commun pattern
 
 # Python environment
 
