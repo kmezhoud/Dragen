@@ -7,7 +7,7 @@ This Quick Start deploys Dynamic Read Analysis for GENomics Suite
 (DRAGEN CS), a data analysis platform by Illumina, on CentOS/ORACLE
 Linux/Clonezilla OSs.
 
-## How to extract Installer file from `.Run` file
+## How to extract `dragen-x.x.x.el8.x86_64.run` file
 
 <a href="https://github.com/kmezhoud/Dragen/blob/main/extract_installer/extract_installer.md" target = "_blank">
 <img src="doc/untar_Dragen.png" align="right" height="100" width="100" title="Parsing JSON nirvana Output">
@@ -21,7 +21,7 @@ files](https://github.com/kmezhoud/Dragen/blob/main/extract_installer/extract_in
 - `edico-4.0.3-15.el8.x86_64.rpm`, and
 - `installer`.
 
-## Parsing `Json` file to `tibble`
+## Parsing Nirvana `Json` file to `tibble`
 
 <a href="https://kmezhoud.github.io/Dragen/Nirvana/Nirvana.html" target = "_blank">
 <img src="doc/json_tibble.png" align="right" height="74" width="272" title="Parsing JSON nirvana Output">
