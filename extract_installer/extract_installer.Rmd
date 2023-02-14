@@ -1,5 +1,14 @@
 ---
-output: github_document
+title: "Extract files from dragen-4.0.3-8.el8.x86_64.run installer"
+author: "Karim Mezhoud"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    code_folding: show
+    toc: false
+    number_sections: true
+    fig_caption: true
+    highlight: tango
 ---
 
 # Extract files from  `.run` installer

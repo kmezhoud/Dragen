@@ -20,11 +20,11 @@ This Quick Start deploys Dynamic Read Analysis for GENomics Suite (DRAGEN CS), a
 
 ## How to extract `dragen-x.x.x.el8.x86_64.run` file
 
-<a href="https://github.com/kmezhoud/Dragen/blob/main/extract_installer/extract_installer.md" target = "_blank">
+<a href="https://kmezhoud.github.io/Dragen//extract_installer/extract_installer.html" target = "_blank">
 <img src="doc/untar_Dragen.png" align="right" height="100" width="100" title="Parsing JSON nirvana Output">
 </a>
 
-The installer file like `dragen-4.0.3-8.el8.x86_64.run` is composed by [3 files](https://github.com/kmezhoud/Dragen/blob/main/extract_installer/extract_installer.md):
+The installer file like `dragen-4.0.3-8.el8.x86_64.run` is composed by [3 files](https://kmezhoud.github.io/Dragen/extract_installer/extract_installer.html):
 
 * `edico_driver-1.4.7-4.0.3.el8.x86_64.rpm`, 
 * `edico-4.0.3-15.el8.x86_64.rpm`, and
