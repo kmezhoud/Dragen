@@ -10,14 +10,14 @@ output:
     number_sections: true
     fig_caption: true
     highlight: tango
-    theme: cosmo
+    #theme: cosmo
 #output: github_document
 #always_allow_html: true
 ---
 
 <style type="text/css">
 .main-container {
-  max-width: 1800px !important;
+  max-width: 1500px !important;
   margin-left: auto;
   margin-right: auto;
 }
@@ -41,6 +41,222 @@ knitr::opts_chunk$set(echo=TRUE, error=FALSE)
 
 &nbsp;
 
+# How to run Nirvana ([Tutorial](https://support.illumina.com/content/dam/illumina-support/help/Illumina_DRAGEN_Bio_IT_Platform_v3_7_1000000141465/Content/SW/Informatics/Dragen/Nirvana_DownloadData_fDG.htm))
+
+## Download the files for genome Assembly
+
+```{bash  eval=FALSE}
+cd /staging/examples/outputs
+mkdir Data
+# Download the files for a genome assembly.
+/opt/edico/share/nirvana/Downloader --ga GRCh38 --out ~/Data
+```
+You can use the same command to resynchronize the data sources with the Nirvana servers, including the following actions:
+
+* Remove obsolete files, such as old versions of data sources, from the output directory. 
+
+* Download newer files.
+
+The following is the created output:
+
+```{Bash eval=FALSE}
+
+Downloader (c) 2020 Illumina, Inc.
+
+Stromberg, Roy, Lajugie, Jiang, Li, and Kang 3.9.1-0-gc823805
+
+---------------------------------------------------------------------------
+
+- downloading manifest... 37 files.
+
+- downloading file metadata:
+
+- finished (00:00:00.8).
+
+- downloading files (22.123 GB):
+
+- downloading 1000_Genomes_Project_Phase_3_v3_plus_refMinor.rma.idx (GRCh38)
+
+- downloading MITOMAP_20200224.nsa.idx (GRCh38)
+
+- downloading ClinVar_20200302.nsa.idx (GRCh38)
+
+- downloading REVEL_20160603.nsa.idx (GRCh38)
+
+- downloading phyloP_hg38.npd.idx (GRCh38)
+
+- downloading ClinGen_Dosage_Sensitivity_Map_20200131.nsi (GRCh38)
+
+- downloading MITOMAP_SV_20200224.nsi (GRCh38)
+
+- downloading dbSNP_151_globalMinor.nsa.idx (GRCh38)
+
+- downloading ClinGen_Dosage_Sensitivity_Map_20190507.nga (GRCh38)
+
+- downloading PrimateAI_0.2.nsa.idx (GRCh38)
+
+- downloading ClinGen_disease_validity_curations_20191202.nga (GRCh38)
+
+- downloading 1000_Genomes_Project_Phase_3_v3_plus.nsa.idx (GRCh38)
+
+- downloading SpliceAi_1.3.nsa.idx (GRCh38)
+
+- downloading dbSNP_153.nsa.idx (GRCh38)
+
+- downloading TOPMed_freeze_5.nsa.idx (GRCh38)
+
+- downloading MITOMAP_20200224.nsa (GRCh38)
+
+- downloading gnomAD_2.1.nsa.idx (GRCh38)
+
+- downloading ClinGen_20160414.nsi (GRCh38)
+
+- downloading gnomAD_gene_scores_2.1.nga (GRCh38)
+
+- downloading 1000_Genomes_Project_(SV)_Phase_3_v5a.nsi (GRCh38)
+
+- downloading MultiZ100Way_20171006.pcs (GRCh38)
+
+- downloading 1000_Genomes_Project_Phase_3_v3_plus_refMinor.rma (GRCh38)
+
+- downloading ClinVar_20200302.nsa (GRCh38)
+
+- downloading OMIM_20200409.nga (GRCh38)
+
+- downloading Both.transcripts.ndb (GRCh38)
+
+- downloading REVEL_20160603.nsa (GRCh38)
+
+- downloading PrimateAI_0.2.nsa (GRCh38)
+
+- downloading dbSNP_151_globalMinor.nsa (GRCh38)
+
+- downloading Both.sift.ndb (GRCh38)
+
+- downloading Both.polyphen.ndb (GRCh38)
+
+- downloading Homo_sapiens.GRCh38.Nirvana.dat
+
+- downloading 1000_Genomes_Project_Phase_3_v3_plus.nsa (GRCh38)
+
+- downloading phyloP_hg38.npd (GRCh38)
+
+- downloading SpliceAi_1.3.nsa (GRCh38)
+
+- downloading TOPMed_freeze_5.nsa (GRCh38)
+
+- downloading dbSNP_153.nsa (GRCh38)
+
+- downloading gnomAD_2.1.nsa (GRCh38)
+
+- finished (00:04:10.1).
+
+Description Status
+
+---------------------------------------------------------------------------
+
+1000_Genomes_Project_(SV)_Phase_3_v5a.nsi (GRCh38) OK
+
+1000_Genomes_Project_Phase_3_v3_plus.nsa (GRCh38) OK
+
+1000_Genomes_Project_Phase_3_v3_plus.nsa.idx (GRCh38) OK
+
+1000_Genomes_Project_Phase_3_v3_plus_refMinor.rma (GRCh38) OK
+
+1000_Genomes_Project_Phase_3_v3_plus_refMinor.rma.idx (... OK
+
+Both.polyphen.ndb (GRCh38) OK
+
+Both.sift.ndb (GRCh38) OK
+
+Both.transcripts.ndb (GRCh38) OK
+
+ClinGen_20160414.nsi (GRCh38) OK
+
+ClinGen_Dosage_Sensitivity_Map_20190507.nga (GRCh38) OK
+
+ClinGen_Dosage_Sensitivity_Map_20200131.nsi (GRCh38) OK
+
+ClinGen_disease_validity_curations_20191202.nga (GRCh38) OK
+
+ClinVar_20200302.nsa (GRCh38) OK
+
+ClinVar_20200302.nsa.idx (GRCh38) OK
+
+Homo_sapiens.GRCh38.Nirvana.dat OK
+
+MITOMAP_20200224.nsa (GRCh38) OK
+
+MITOMAP_20200224.nsa.idx (GRCh38) OK
+
+MITOMAP_SV_20200224.nsi (GRCh38) OK
+
+MultiZ100Way_20171006.pcs (GRCh38) OK
+
+OMIM_20200409.nga (GRCh38) OK
+
+PrimateAI_0.2.nsa (GRCh38) OK
+
+PrimateAI_0.2.nsa.idx (GRCh38) OK
+
+REVEL_20160603.nsa (GRCh38) OK
+
+REVEL_20160603.nsa.idx (GRCh38) OK
+
+SpliceAi_1.3.nsa (GRCh38) OK
+
+SpliceAi_1.3.nsa.idx (GRCh38) OK
+
+TOPMed_freeze_5.nsa (GRCh38) OK
+
+TOPMed_freeze_5.nsa.idx (GRCh38) OK
+
+dbSNP_151_globalMinor.nsa (GRCh38) OK
+
+dbSNP_151_globalMinor.nsa.idx (GRCh38) OK
+
+dbSNP_153.nsa (GRCh38) OK
+
+dbSNP_153.nsa.idx (GRCh38) OK
+
+gnomAD_2.1.nsa (GRCh38) OK
+
+gnomAD_2.1.nsa.idx (GRCh38) OK
+
+gnomAD_gene_scores_2.1.nga (GRCh38) OK
+
+phyloP_hg38.npd (GRCh38) OK
+
+phyloP_hg38.npd.idx (GRCh38) OK
+
+---------------------------------------------------------------------------
+
+Peak memory usage: 52.3 MB
+
+Time: 00:04:12.2
+```
+
+
+## Annotae Files and generate `Json` output
+
+We can use `HiSeq.10000.json.gz` file, generated in previous section, or download it from github.
+
+```{Bash eval=FALSE}
+
+# download and example of vcf.gz file
+curl -O https://raw.githubusercontent.com/HelixGrind/DotNetMisc/master/TestFiles/HiSeq.10000.vcf.gz 
+
+#generate json output
+/opt/edico/share/nirvana/Nirvana -c ~/Data/Cache/GRCh38/Both \
+-r ~/Data/References/Homo_sapiens.GRCh38.Nirvana.dat \
+--sd ~/Data/SupplementaryAnnotation/GRCh38 \
+-i HiSeq.10000.vcf.gz -o HiSeq.10000
+```
+
+![](../doc/nirvana_json_outpu_terminal.png)
+
+
+
 # JSON Structure
 
 ![](../doc/nirvana_json_anatomy.png){align="center"}
@@ -49,7 +265,7 @@ knitr::opts_chunk$set(echo=TRUE, error=FALSE)
 
 [Link](https://github.com/Illumina/NirvanaDocumentation/blob/master/static/files/parse-nirvana-json-r.ipynb) to Illumina parsing style.
 
-```{bash, eval=FALSE}
+```{Bash, eval=FALSE}
 # Load  an example of Nirvana json file output
 wget https://illumina.github.io/NirvanaDocumentation/files/HiSeq.10000.json.gz
 ```
@@ -129,7 +345,7 @@ print(paste('number of positions: ', position_count))
 print(paste('number of genes: ', gene_count))
 ```
 
-## Convert Positions object to a Dataframe
+## Convert Positions object to a Tibble
 
 * Followed by the `positions` lines (two positions lines in this case:)
 
@@ -152,7 +368,7 @@ print(paste('number of genes: ', gene_count))
 positions[1:10] |>
   lapply(function(x) dplyr::bind_rows(fromJSON(x)) |>   
            tidyr::unnest(cols = c(samples, variants), names_sep = ".")  ) |>
-  dplyr::bind_rows(.id = "column_label") |>
+  dplyr::bind_rows(.id = "index") |>
   #tidyr::unnest(c( samples.variantFrequencies, samples.alleleDepths))%>% 
   #tidyr::unnest(filters) %>%
   #distinct() %>%
@@ -231,9 +447,15 @@ positions[c(1:10,163,163 , 237,  288, 397,  572) ] %>%
            {
              if(c("variants.transcripts_consequence") %in% names(.)) unnest(., cols = c(variants.transcripts_consequence), names_sep="_") else .
            } )|>
-  dplyr::bind_rows(.id = "rownames") |>
-  DT::datatable(options = list(scrollX = TRUE#,
-                               #columnDefs = list(list(className = 'dt-center', targets = c(0, 25)))
+  dplyr::bind_rows(.id = "index") |>
+  #tidyr::separate(variants.transcripts_hgnc, into = c("Accession","variants.transcripts_hgnc"), sep = ".") |>
+  #mutate( Accession = stringr::str_split(variants.transcripts_hgnc, pattern = ".", simplify = TRUE)) |>
+  mutate(`__Accession__` = case_when(stringr::str_detect(variants.transcripts_hgnc, "\\.") ~
+                                                stringr::str_extract(variants.transcripts_hgnc, ".*(?=\\.\\d$)"), 
+                                     TRUE ~ variants.transcripts_hgnc)) |>
+  select(index, `__Accession__`, variants.transcripts_hgnc,variants.transcripts_geneId,  everything()) |>
+  DT::datatable(options = list(scrollX = TRUE,
+                               columnDefs = list(list(className = 'dt-center', targets = "_all"))
   ),
   rownames = FALSE
   )
@@ -241,7 +463,7 @@ positions[c(1:10,163,163 , 237,  288, 397,  572) ] %>%
    
 ```
 
-## Convert Genes Object to dataframe
+## Convert Genes Object to Tibble
 
 * After the `positions` lines, there are the `gens`lines, which are optional if there is no overlapping gene of the input `VCF` variants (3 lines for 2 genes in th example)
 
@@ -257,6 +479,13 @@ genes[c(1:77)] |>
            }
   )  %>% 
   bind_rows() %>%
+  rename("_________________________omim.description____________________________"= omim.description,
+         "____________________omim.phenotypes_description______________________"= omim.phenotypes_description) %>%
+    mutate(`__Accession__` = case_when(stringr::str_detect(name, "\\.") ~
+                                                stringr::str_extract(name, ".*(?=\\.\\d$)"), 
+                                     TRUE ~ name)) %>%
+  
+  select(`__Accession__`, name, omim.geneName, clingenGeneValidity.classification, everything()) %>%
   DT::datatable(options = list(scrollX = TRUE, autoWidth = TRUE,
                                columnDefs = list(list(className = 'dt-center', targets = "_all"), 
                                                  list(width = '650px', targets= list(11,  14)),
