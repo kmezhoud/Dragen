@@ -21,7 +21,7 @@ This Quick Start deploys Dynamic Read Analysis for GENomics Suite (DRAGEN CS), a
 ## How to extract `dragen-x.x.x.el8.x86_64.run` file
 
 <a href="https://kmezhoud.github.io/Dragen//extract_installer/extract_installer.html" target = "_blank">
-<img src="doc/untar_Dragen.png" align="right" height="100" width="100" title="Parsing JSON nirvana Output">
+<img src="doc/untar_Dragen.png" align="right" height="100" width="100" title="Extract Dragen Installer">
 </a>
 
 The installer file like `dragen-4.0.3-8.el8.x86_64.run` is composed by [3 files](https://kmezhoud.github.io/Dragen/extract_installer/extract_installer.html):
