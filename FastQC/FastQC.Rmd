@@ -129,7 +129,7 @@ foo %>%
 * Number of bases of each specific nucleotide at given locations in the read. Locations are given first and can be either specific positions or ranges. The nucleotide is listed second and can be A, C, G, T, N.
 
 
-```{r,fig.height=8, fig.width=12}
+```{r,fig.height=8, fig.width=10}
 foo <-fastqc %>%
   filter(Section %in% c("POSITIONAL BASE CONTENT","POSITIONAL BASE MEAN QUALITY"))  %>%
   mutate(Metric = str_replace(Metric, ' Average Quality', '')) %>%
@@ -153,7 +153,7 @@ ggplotly(p1)
 ```
 
 
-```{r,fig.height=8, fig.width=12}
+```{r,fig.height=8, fig.width=10}
 p2 <- foo %>% na.omit() %>%
   ggplot() +
   geom_line(aes(x = Positions , y = `POSITIONAL BASE MEAN QUALITY`, colour= Base)) +
@@ -169,7 +169,7 @@ ggplotly(p2)
 
 * Scatter3d
 
-```{r,fig.height=8, fig.width=12, warning=FALSE}
+```{r,fig.height=8, fig.width=10, warning=FALSE}
 foo <- fastqc %>% na.omit() %>%
   filter(Section %in% c("POSITIONAL BASE CONTENT","POSITIONAL BASE MEAN QUALITY"))  %>%
   mutate(Metric = str_replace(Metric, ' Average Quality', '')) %>%
