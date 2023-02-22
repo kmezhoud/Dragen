@@ -102,7 +102,9 @@ foo %>%
   labs(title= "READ MEAN QUALITY")+
   theme(axis.text.x = element_text(colour = "#277a91", face="bold", angle = 45))+
   scale_x_continuous(breaks= seq(10, 35,5),
-                     labels = c("Q10", "Q15", "Q20", "Q25", "Q30", "Q35"))
+                     labels = c("Q10", "Q15", "Q20", "Q25", "Q30", "Q35"))+
+  xlab("Mean Sequence Quality")+
+  ylab("Count")
 
 ```
 
@@ -120,12 +122,12 @@ foo <-fastq %>%
 
 p1 <- foo %>% #na.omit() %>%
   ggplot() +
-  geom_point(aes(x = Positions , y = `POSITIONAL BASE CONTENT`, colour= Base)) +
+  geom_line(aes(x = Positions , y = `POSITIONAL BASE CONTENT`, colour= Base)) +
   facet_wrap(~Mate, nrow = 2) +
   labs(title = "POSITIONAL BASE CONTENT")
 # scale_x_discrete(guide = guide_axis(n.dodge = 2)) 
 
-p1
+ggplotly(p1)
 
 
 ```
@@ -136,7 +138,7 @@ p1
 
 p2 <- foo %>% na.omit() %>%
   ggplot() +
-  geom_point(aes(x = Positions , y = `POSITIONAL BASE MEAN QUALITY`, colour= Base)) +
+  geom_line(aes(x = Positions , y = `POSITIONAL BASE MEAN QUALITY`, colour= Base)) +
   facet_wrap(~Mate, nrow = 2) +
   labs(title = "POSITIONAL BASE MEAN QUALITY")
   #scale_x_discrete(guide = guide_axis(angle = 90)) +
@@ -144,7 +146,7 @@ p2 <- foo %>% na.omit() %>%
 
 #grid.arrange(p1, p2, ncol = 2)
 #plotly::ggplotly(p2)
-p2
+ggplotly(p2)
 ```
 
 * Scatter3d
@@ -184,15 +186,15 @@ foo <- fastq %>%
   tidyr::spread(key = Section, value = Value) %>%
   mutate(across('Metric', str_replace, '% GC Reads', '')) %>%
   mutate(Metric = as.numeric(Metric)) %>%
-  rename(Percentage = Metric)
+  rename(`GC Count Percentile` = Metric)
  # mutate(`READ GC CONTENT` = log(`READ GC CONTENT`)) 
 
 
 p1 <- ggplot(foo) +
-    geom_line(aes(x = Percentage , y = `READ GC CONTENT QUALITY`, colour= Mate))
+    geom_line(aes(x = `GC Count Percentile` , y = `READ GC CONTENT QUALITY`, colour= Mate))
 
 p2 <- ggplot(foo)+
-      geom_line(aes(x = Percentage , y = `READ GC CONTENT`, colour= Mate))+
+      geom_line(aes(x = `GC Count Percentile` , y = `READ GC CONTENT`, colour= Mate))+
       theme(legend.position = "")
 
 
@@ -268,6 +270,7 @@ foo %>%
   aes(x = Positions, y= Value , colour= Quantile) +
   geom_jitter() +
   facet_wrap(~Mate, nrow = 2) +
-  labs(title= "POSITIONAL QUALITY")
+  labs(title= "POSITIONAL QUALITY")+
+  ylab("Phred-scale quality")
   
 ```
