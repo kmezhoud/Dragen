@@ -13,13 +13,19 @@ output:
     highlight: tango
 ---
 
+```{r setup, include=FALSE, echo=FALSE}
+knitr::opts_chunk$set(echo=TRUE, error=FALSE)
+```
+
+![](../doc/fastQC.png){style="display: block; margin: 0 auto"}
+
 # EDA of `FastQ_metrics.csv` output
 
 The metrics are generated automatically on all DRAGEN map-align workflows, with no additional run time, and output in a `CSV` format file called `<PREFIX>.fastqc_metrics.csv`. 
 
 The reported metrics are organized into eight sections by metric type. Each section is categorized into separate rows by length, position, or other relevant categorical variables. The following metric types compose the sections. 
 
-![Illumina Support](img/fastQC_structure.png)
+![Illumina Support](img/fastQC_structure.png?style=center){style="display: block; margin: 0 auto"}
 
 Here an example of [FastQ_metrics.csv](https://github.com/ewels/MultiQC/files/9564840/I33974-L3.fastqc_metrics.csv) Report,  available in this github [thread](https://github.com/ewels/MultiQC/issues/1737).
 
@@ -56,7 +62,7 @@ fastq %>%
 
 * Explore manually rows with 5 columns
 
-![](img/problem.png)
+![](img/problem.png){style="display: block; margin: 0 auto" }
 
 * At this point we will ignore 5th columns
 

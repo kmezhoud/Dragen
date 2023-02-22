@@ -28,18 +28,7 @@ output:
 knitr::opts_chunk$set(echo=TRUE, error=FALSE)
 ```
 
-![](../doc/json_tibble.png){align="right"}
-&nbsp;
-
-&nbsp;
-
-&nbsp;
-
-&nbsp;
-
-&nbsp;
-
-&nbsp;
+![](../doc/json_tibble.png){style="display: block; margin: 0 auto" }
 
 # How to run Nirvana ([Tutorial](https://support.illumina.com/content/dam/illumina-support/help/Illumina_DRAGEN_Bio_IT_Platform_v3_7_1000000141465/Content/SW/Informatics/Dragen/Nirvana_DownloadData_fDG.htm))
 
@@ -253,13 +242,13 @@ curl -O https://raw.githubusercontent.com/HelixGrind/DotNetMisc/master/TestFiles
 -i HiSeq.10000.vcf.gz -o HiSeq.10000
 ```
 
-![](../doc/nirvana_json_outpu_terminal.png)
+![](../doc/nirvana_json_outpu_terminal.png){style="display: block; margin: 0 auto" }
 
 
 
 # JSON Structure
 
-![](../doc/nirvana_json_anatomy.png){align="center"}
+![](../doc/nirvana_json_anatomy.png){style="display: block; margin: 0 auto" }
 
 #  R Environment
 
@@ -274,7 +263,7 @@ wget https://illumina.github.io/NirvanaDocumentation/files/HiSeq.10000.json.gz
 
 * The first line in the `JSON` file in the `header` line:
 
-![](../doc/json_header.png)
+![](../doc/json_header.png){style="display: block; margin: 0 auto" }
 
 ```{r ,  message=FALSE}
 require(jsonlite)
@@ -349,7 +338,7 @@ print(paste('number of genes: ', gene_count))
 
 * Followed by the `positions` lines (two positions lines in this case:)
 
-![](../doc/json_positions.png)
+![](../doc/json_positions.png){style="display: block; margin: 0 auto" }
 
 
 ![](../doc/positions1.png){width=30%}![](../doc/positions2.png){width=30%}![](../doc/positions3.png){width=30%}
@@ -467,7 +456,7 @@ positions[c(1:10,163,163 , 237,  288, 397,  572) ] %>%
 
 * After the `positions` lines, there are the `genes` lines, which are optional if there is no overlapping gene of the input `VCF` variants (3 lines for 2 genes in th example)
 
-![](../doc/json_genes.png)
+![](../doc/json_genes.png){style="display: block; margin: 0 auto" }
 
 
 
