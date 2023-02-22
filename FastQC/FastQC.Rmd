@@ -42,7 +42,7 @@ library(plotly)
 ```{r}
 # Read csv file
 fastq <- read_csv("I33974-L3.fastqc_metrics.csv", col_names = FALSE, show_col_types = FALSE) %>%
-         rename(Section =X1, Mate=X2, Metric=X3, Value=X4)
+  rename(Section =X1, Mate=X2, Metric=X3, Value=X4)
 
 ```
 
@@ -74,14 +74,28 @@ We will check which Metrics have the same number of samples.
 fastq %>%
   group_by(Section, Mate) %>%
   summarise(N = n(), .groups = "keep") %>%
-      DT::datatable(options = list(scrollX = TRUE,
-                 columnDefs = list(list(className = 'dt-center', targets = "_all"))
-                ),
-                rownames = FALSE
-                )
+  DT::datatable(options = list(scrollX = TRUE,
+                               columnDefs = list(list(className = 'dt-center', targets = "_all"))
+  ),
+  rownames = FALSE
+  )
 ```
 
 * The `READ GC CONTENT` and `READ GC CONTENT QUALITY` seem to be related.  We will try to plot theme side-by-side.
+
+### `READ LENGTH`
+
+Total number of reads with each observed length. Lengths can be either specific sizes or ranges, depending on the settings specified using `--fastqc-granularity`.
+
+```{r}
+fastq %>%
+  filter(Section== "READ LENGTHS") %>%
+  DT::datatable(options = list(scrollX = TRUE,
+                               columnDefs = list(list(className = 'dt-center', targets = "_all"))
+  ),
+  rownames = FALSE
+  )
+```
 
 
 ### `READ MEAN QUALITY`
@@ -91,14 +105,14 @@ It is the Total number of reads. Each average Phred-scale quality value is round
 ```{r}
 foo <- fastq %>%
   filter(Section %in% c( "READ MEAN QUALITY")) %>%
-    mutate(across('Metric', str_replace, ' Reads', '')) %>%
-  mutate(across('Metric', str_replace, 'Q', '')) %>%
+  mutate( Metric = str_replace(Metric, ' Reads', '')) %>%
+  mutate( Metric = str_replace(Metric, 'Q', '')) %>%
   mutate(Metric = as.numeric(Metric)) 
 
 foo %>%
   ggplot() +
   aes(x = Metric , y = Value, colour= Mate) +
-   geom_line() +
+  geom_line() +
   labs(title= "READ MEAN QUALITY")+
   theme(axis.text.x = element_text(colour = "#277a91", face="bold", angle = 45))+
   scale_x_continuous(breaks= seq(10, 35,5),
@@ -110,12 +124,20 @@ foo %>%
 
 ###  `POSITIONAL BASE MEAN QUALITY` versus `POSITIONAL BASE CONTENT`
 
+* Average Phred-scale quality value of bases with a specific nucleotide and at a given location in the read. Locations are listed first and can be either specific positions or ranges. The nucleotide is listed second and can be A, C, G, or T. N or ambiguous bases are assumed to have the system default value, usually QV2.
+
+* Number of bases of each specific nucleotide at given locations in the read. Locations are given first and can be either specific positions or ranges. The nucleotide is listed second and can be A, C, G, T, N.
+
+
 ```{r,fig.height=8, fig.width=12}
 foo <-fastq %>%
   filter(Section %in% c("POSITIONAL BASE CONTENT","POSITIONAL BASE MEAN QUALITY"))  %>%
-  mutate(across('Metric', str_replace, ' Average Quality', '')) %>%
-  mutate(across('Metric', str_replace, ' Bases', '')) %>%
-  mutate(across('Metric', str_replace, 'ReadPos ', '')) %>%
+  mutate(Metric = str_replace(Metric, ' Average Quality', '')) %>%
+  mutate(Metric = str_replace(Metric, ' Bases', '')) %>%
+  mutate(Metric = str_replace(Metric,'ReadPos ', '')) %>%
+  # mutate(across('Metric', str_replace, ' Average Quality', '')) %>%
+  #mutate(across('Metric', str_replace, ' Bases', '')) %>%
+  #mutate(across('Metric', str_replace, 'ReadPos ', '')) %>%
   tidyr::spread(key = Section, value = Value) %>%
   tidyr::separate(Metric, c("Positions", "Base"), sep=" ") %>%
   mutate(Positions = as.numeric(Positions)) 
@@ -128,21 +150,17 @@ p1 <- foo %>% #na.omit() %>%
 # scale_x_discrete(guide = guide_axis(n.dodge = 2)) 
 
 ggplotly(p1)
-
-
 ```
 
 
 ```{r,fig.height=8, fig.width=12}
-
-
 p2 <- foo %>% na.omit() %>%
   ggplot() +
   geom_line(aes(x = Positions , y = `POSITIONAL BASE MEAN QUALITY`, colour= Base)) +
   facet_wrap(~Mate, nrow = 2) +
   labs(title = "POSITIONAL BASE MEAN QUALITY")
-  #scale_x_discrete(guide = guide_axis(angle = 90)) +
-  #scale_x_discrete(guide = guide_axis(n.dodge = 2)) 
+#scale_x_discrete(guide = guide_axis(angle = 90)) +
+#scale_x_discrete(guide = guide_axis(n.dodge = 2)) 
 
 #grid.arrange(p1, p2, ncol = 2)
 #plotly::ggplotly(p2)
@@ -154,15 +172,18 @@ ggplotly(p2)
 ```{r,fig.height=8, fig.width=12, warning=FALSE}
 foo <- fastq %>% na.omit() %>%
   filter(Section %in% c("POSITIONAL BASE CONTENT","POSITIONAL BASE MEAN QUALITY"))  %>%
-  mutate(across('Metric', str_replace, ' Average Quality', '')) %>%
-  mutate(across('Metric', str_replace, ' Bases', '')) %>%
-  mutate(across('Metric', str_replace, 'ReadPos ', '')) %>%
+  mutate(Metric = str_replace(Metric, ' Average Quality', '')) %>%
+  mutate(Metric = str_replace(Metric, ' Bases', '')) %>%
+  mutate(Metric = str_replace(Metric,'ReadPos ', '')) %>%
+  #mutate(across('Metric', str_replace, ' Average Quality', '')) %>%
+  #mutate(across('Metric', str_replace, ' Bases', '')) %>%
+  #mutate(across('Metric', str_replace, 'ReadPos ', '')) %>%
   tidyr::spread(key = Section, value = Value) %>%
   tidyr::separate(Metric, c("Positions", "Base"), sep=" ") %>%
   mutate(Positions = as.numeric(Positions)) %>%
   rename(Content = `POSITIONAL BASE CONTENT`, Quality= `POSITIONAL BASE MEAN QUALITY`)#%>%
-  #mutate(across('Mate', str_replace, 'Read', '')) %>%
-  #mutate(Mate = as.numeric(Mate))
+#mutate(across('Mate', str_replace, 'Read', '')) %>%
+#mutate(Mate = as.numeric(Mate))
 
 
 plotly::plot_ly(data= foo, type = "scatter3d", mode = 'markers',
@@ -170,32 +191,36 @@ plotly::plot_ly(data= foo, type = "scatter3d", mode = 'markers',
                 color=~Base, 
                 marker= list(size=3#, #color=~as.factor(Mate),
                              #line= list(color=~as.factor(Mate), width=1)
-                             )) #%>%
-   #add_trace( x= ~Positions, y= ~Quality, #z= ~Content, name = 'trace 1',
-  #            mode = 'lines', color=~Base~Mate) 
+                )) #%>%
+#add_trace( x= ~Positions, y= ~Quality, #z= ~Content, name = 'trace 1',
+#            mode = 'lines', color=~Base~Mate) 
 ```
 
 
 ### `READ GC CONTENT` versus `READ GC CONTENT QUALITY`
 
+* Total number of reads with each GC content percentile between $0%$ and 100%
+
+* Average Phred-scale read mean quality for reads with each `GC` content percentile between $0%$ and $100%$. 
+
 ```{r, fig.height=4, fig.width=12}
 
 foo <- fastq %>%
   filter(Section %in% c("READ GC CONTENT", "READ GC CONTENT QUALITY")) %>%
-  mutate(across('Metric', str_replace, ' Average Quality', '')) %>%
+  mutate(Metric = str_replace(Metric,  ' Average Quality', '')) %>%
   tidyr::spread(key = Section, value = Value) %>%
-  mutate(across('Metric', str_replace, '% GC Reads', '')) %>%
+  mutate(Metric = str_replace(Metric, '% GC Reads', '')) %>%
   mutate(Metric = as.numeric(Metric)) %>%
   rename(`GC Count Percentile` = Metric)
- # mutate(`READ GC CONTENT` = log(`READ GC CONTENT`)) 
+# mutate(`READ GC CONTENT` = log(`READ GC CONTENT`)) 
 
 
 p1 <- ggplot(foo) +
-    geom_line(aes(x = `GC Count Percentile` , y = `READ GC CONTENT QUALITY`, colour= Mate))
+  geom_line(aes(x = `GC Count Percentile` , y = `READ GC CONTENT QUALITY`, colour= Mate))
 
 p2 <- ggplot(foo)+
-      geom_line(aes(x = `GC Count Percentile` , y = `READ GC CONTENT`, colour= Mate))+
-      theme(legend.position = "")
+  geom_line(aes(x = `GC Count Percentile` , y = `READ GC CONTENT`, colour= Mate))+
+  theme(legend.position = "")
 
 
 
@@ -207,13 +232,15 @@ grid.arrange(p1, p2, ncol = 2)
 
 ### `SEQUENCE POSITIONS`
 
+It is the Number of times an adapter or other kmer sequence is found, starting at a given position in the input reads. Sequences are listed first in the metric description in quotes. Locations are listed second and can be either specific positions or ranges. 
+
 ```{r,fig.height=8, fig.width=12}
 foo <- fastq %>%
   filter(Section %in% c( "SEQUENCE POSITIONS")) %>%
-  mutate(across('Metric', str_replace, ' Sequence', '')) %>%
+  mutate(Metric = str_replace(Metric,  ' Sequence', '')) %>%
   tidyr::separate(Metric, c("Reads","Starts", "NA"), sep = " " ) %>%
   select(-`NA`) %>%
-  mutate(across('Starts', str_replace, 'bp', '')) %>%
+  mutate(Starts = str_replace(Starts, 'bp', '')) %>%
   filter(Starts != "Total") %>% ## filtering these rows which are the sum of reads.
   mutate(Starts = as.numeric(Starts)) #%>%
 #filter(Reads != "'CTGTCTCTTATA'")
@@ -227,13 +254,30 @@ p2 <- foo %>%
   labs(title= "Sequence Positions")+
   theme(legend.position = c(0.1,0.84), 
         legend.background = element_rect(fill= "transparent"),
-        legend.key = element_rect(colour = "transparent", fill= "transparent"))
+        legend.key = element_rect(colour = "transparent", fill= "transparent")) +
+  xlab("Postions X bp Starts") +
+  ylab("Nbr. adapter or kmer is found")
 #ggforce::facet_zoom(ylim = c(0, 25))
 
 #plotly::ggplotly(p1)
 p2
 ```
 
+### what about Seqeunces
+
+```{r}
+fastq %>%
+  filter(Section %in% c( "SEQUENCE POSITIONS")) %>%
+  mutate(Metric = str_replace(Metric, ' Sequence', '')) %>%
+  tidyr::separate(Metric, c("Reads","Starts", "NA"), sep = " " ) %>%
+  select(-`NA`) %>%
+  mutate(Starts = str_replace(Starts, 'bp', '')) %>%
+  filter(Starts != "Total") %>% ## filtering these rows which are the sum of reads.
+  mutate(Starts = as.numeric(Starts)) %>%
+  distinct(Reads)
+
+
+```
 
 
 * Zoom In Sequence Positions
@@ -259,8 +303,8 @@ p2
 ```{r,fig.height=8, fig.width=12}
 foo <- fastq %>%
   filter(Section %in% c( "POSITIONAL QUALITY")) %>%
-  mutate(across('Metric', str_replace, '% Quantile QV', '')) %>%
-  mutate(across('Metric', str_replace, 'ReadPos ', '')) %>%
+  mutate(Metric = str_replace(Metric, '% Quantile QV', '')) %>%
+  mutate(Metric= str_replace(Metric, 'ReadPos ', '')) %>%
   tidyr::separate(Metric, c("Positions", "Quantile"), sep=" ") %>%
   mutate(Positions = as.numeric(Positions),
          Quantile = as.numeric(Quantile)/100 )
