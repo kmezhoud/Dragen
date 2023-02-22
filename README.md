@@ -1,7 +1,7 @@
 Playing around Dragen Server
 ================
 Karim Mezhoud
-2023-02-14
+2023-02-22
 
 <!-- README.md is generated from README.Rmd. Please edit that file! -->
 
@@ -37,7 +37,17 @@ files](https://kmezhoud.github.io/Dragen/extract_installer/extract_installer.htm
 
  
 
-## Create Docker image from .ISO file
+## Visualize Dragen FastQC Report
+
+<a href="https://kmezhoud.github.io/Dragen/FastQC/FastQC.html" target = "_blank">
+\<img src=“doc/fastQC.png” align=“right” height=“74” width=“272” title=”
+Visualize Dragen FastQC Report\> </a>
+
+ 
+
+ 
+
+  \## Create Docker image from .ISO file
 
 The goal is to use/convert ORACLE/CentOS/Cloneziolla .ISO image as a
 docker container.

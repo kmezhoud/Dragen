@@ -45,7 +45,17 @@ The installer file like `dragen-4.0.3-8.el8.x86_64.run` is composed by [3 files]
 
 &nbsp;
 
+## Visualize Dragen FastQC Report
 
+<a href="https://kmezhoud.github.io/Dragen/FastQC/FastQC.html" target = "_blank">
+<img src="doc/fastQC.png" align="right" height="74" width="272" title=" Visualize Dragen FastQC Report>
+</a>
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
 ## Create Docker image from .ISO file
 
 The goal is to use/convert ORACLE/CentOS/Cloneziolla .ISO image as a docker container.
