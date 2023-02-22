@@ -64,7 +64,7 @@ fastq %>%
 
 ![](img/problem.png){style="display: block; margin: 0 auto" }
 
-* At this point we will ignore 5th columns
+* At this point we will ignore 5th column
 
 ## Look for relationships between Sections
 
@@ -143,8 +143,36 @@ p2 <- foo %>% na.omit() %>%
   #scale_x_discrete(guide = guide_axis(n.dodge = 2)) 
 
 #grid.arrange(p1, p2, ncol = 2)
+#plotly::ggplotly(p2)
 p2
 ```
+
+* Scatter3d
+
+```{r,fig.height=8, fig.width=12, warning=FALSE}
+foo <- fastq %>% na.omit() %>%
+  filter(Section %in% c("POSITIONAL BASE CONTENT","POSITIONAL BASE MEAN QUALITY"))  %>%
+  mutate(across('Metric', str_replace, ' Average Quality', '')) %>%
+  mutate(across('Metric', str_replace, ' Bases', '')) %>%
+  mutate(across('Metric', str_replace, 'ReadPos ', '')) %>%
+  tidyr::spread(key = Section, value = Value) %>%
+  tidyr::separate(Metric, c("Positions", "Base"), sep=" ") %>%
+  mutate(Positions = as.numeric(Positions)) %>%
+  rename(Content = `POSITIONAL BASE CONTENT`, Quality= `POSITIONAL BASE MEAN QUALITY`)#%>%
+  #mutate(across('Mate', str_replace, 'Read', '')) %>%
+  #mutate(Mate = as.numeric(Mate))
+
+
+plotly::plot_ly(data= foo, type = "scatter3d", mode = 'markers',
+                x= ~Positions, y= ~Quality, z= ~Content,
+                color=~Base, 
+                marker= list(size=3#, #color=~as.factor(Mate),
+                             #line= list(color=~as.factor(Mate), width=1)
+                             )) #%>%
+   #add_trace( x= ~Positions, y= ~Quality, #z= ~Content, name = 'trace 1',
+  #            mode = 'lines', color=~Base~Mate) 
+```
+
 
 ### `READ GC CONTENT` versus `READ GC CONTENT QUALITY`
 
@@ -184,7 +212,7 @@ foo <- fastq %>%
   tidyr::separate(Metric, c("Reads","Starts", "NA"), sep = " " ) %>%
   select(-`NA`) %>%
   mutate(across('Starts', str_replace, 'bp', '')) %>%
-  filter(Starts != "Total") %>% ## filtering these rows which are the some of each read.
+  filter(Starts != "Total") %>% ## filtering these rows which are the sum of reads.
   mutate(Starts = as.numeric(Starts)) #%>%
 #filter(Reads != "'CTGTCTCTTATA'")
 #group_by(Read,Mate) %>%
