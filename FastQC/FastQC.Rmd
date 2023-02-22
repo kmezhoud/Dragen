@@ -41,7 +41,7 @@ library(plotly)
 
 ```{r}
 # Read csv file
-fastq <- read_csv("I33974-L3.fastqc_metrics.csv", col_names = FALSE, show_col_types = FALSE) %>%
+fastqc <- read_csv("I33974-L3.fastqc_metrics.csv", col_names = FALSE, show_col_types = FALSE) %>%
   rename(Section =X1, Mate=X2, Metric=X3, Value=X4)
 
 ```
@@ -50,13 +50,13 @@ fastq <- read_csv("I33974-L3.fastqc_metrics.csv", col_names = FALSE, show_col_ty
 
 ```{r}
 # check problems in the structure of csv
-problems(fastq)
+problems(fastqc)
 ```
 * Some rows have 5 columns
 
 ```{r}
 # glimpse rows with 5 columns
-fastq %>%
+fastqc %>%
   slice(1694, 1819, 1834, 1972, 5341, 5457, 5476, 5615)
 ```
 
@@ -71,7 +71,7 @@ fastq %>%
 We will check which Metrics have the same number of samples.
 
 ```{r}
-fastq %>%
+fastqc %>%
   group_by(Section, Mate) %>%
   summarise(N = n(), .groups = "keep") %>%
   DT::datatable(options = list(scrollX = TRUE,
@@ -88,7 +88,7 @@ fastq %>%
 Total number of reads with each observed length. Lengths can be either specific sizes or ranges, depending on the settings specified using `--fastqc-granularity`.
 
 ```{r}
-fastq %>%
+fastqc %>%
   filter(Section== "READ LENGTHS") %>%
   DT::datatable(options = list(scrollX = TRUE,
                                columnDefs = list(list(className = 'dt-center', targets = "_all"))
@@ -103,7 +103,7 @@ fastq %>%
 It is the Total number of reads. Each average Phred-scale quality value is rounded to the nearest integer.
 
 ```{r}
-foo <- fastq %>%
+foo <- fastqc %>%
   filter(Section %in% c( "READ MEAN QUALITY")) %>%
   mutate( Metric = str_replace(Metric, ' Reads', '')) %>%
   mutate( Metric = str_replace(Metric, 'Q', '')) %>%
@@ -130,7 +130,7 @@ foo %>%
 
 
 ```{r,fig.height=8, fig.width=12}
-foo <-fastq %>%
+foo <-fastqc %>%
   filter(Section %in% c("POSITIONAL BASE CONTENT","POSITIONAL BASE MEAN QUALITY"))  %>%
   mutate(Metric = str_replace(Metric, ' Average Quality', '')) %>%
   mutate(Metric = str_replace(Metric, ' Bases', '')) %>%
@@ -170,7 +170,7 @@ ggplotly(p2)
 * Scatter3d
 
 ```{r,fig.height=8, fig.width=12, warning=FALSE}
-foo <- fastq %>% na.omit() %>%
+foo <- fastqc %>% na.omit() %>%
   filter(Section %in% c("POSITIONAL BASE CONTENT","POSITIONAL BASE MEAN QUALITY"))  %>%
   mutate(Metric = str_replace(Metric, ' Average Quality', '')) %>%
   mutate(Metric = str_replace(Metric, ' Bases', '')) %>%
@@ -205,7 +205,7 @@ plotly::plot_ly(data= foo, type = "scatter3d", mode = 'markers',
 
 ```{r, fig.height=4, fig.width=12}
 
-foo <- fastq %>%
+foo <- fastqc %>%
   filter(Section %in% c("READ GC CONTENT", "READ GC CONTENT QUALITY")) %>%
   mutate(Metric = str_replace(Metric,  ' Average Quality', '')) %>%
   tidyr::spread(key = Section, value = Value) %>%
@@ -235,7 +235,7 @@ grid.arrange(p1, p2, ncol = 2)
 It is the Number of times an adapter or other kmer sequence is found, starting at a given position in the input reads. Sequences are listed first in the metric description in quotes. Locations are listed second and can be either specific positions or ranges. 
 
 ```{r,fig.height=8, fig.width=12}
-foo <- fastq %>%
+foo <- fastqc %>%
   filter(Section %in% c( "SEQUENCE POSITIONS")) %>%
   mutate(Metric = str_replace(Metric,  ' Sequence', '')) %>%
   tidyr::separate(Metric, c("Reads","Starts", "NA"), sep = " " ) %>%
@@ -266,7 +266,7 @@ p2
 ### what about Seqeunces
 
 ```{r}
-fastq %>%
+fastqc %>%
   filter(Section %in% c( "SEQUENCE POSITIONS")) %>%
   mutate(Metric = str_replace(Metric, ' Sequence', '')) %>%
   tidyr::separate(Metric, c("Reads","Starts", "NA"), sep = " " ) %>%
@@ -301,7 +301,7 @@ p2
 ### `POSITIONAL QUALITY`
 
 ```{r,fig.height=8, fig.width=12}
-foo <- fastq %>%
+foo <- fastqc %>%
   filter(Section %in% c( "POSITIONAL QUALITY")) %>%
   mutate(Metric = str_replace(Metric, '% Quantile QV', '')) %>%
   mutate(Metric= str_replace(Metric, 'ReadPos ', '')) %>%
