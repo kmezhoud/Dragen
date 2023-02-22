@@ -40,7 +40,7 @@ files](https://kmezhoud.github.io/Dragen/extract_installer/extract_installer.htm
 ## Visualize Dragen FastQC Report
 
 <a href="https://kmezhoud.github.io/Dragen/FastQC/FastQC.html" target = "_blank">
-<img src="doc/fastQC.png" align="right" height="74" width="272" title="Visualize Dragen FastQC Report">
+<img src="doc/fastQC.png" align="right" height="80" width="272" title="Visualize Dragen FastQC Report">
 </a>
 
  
