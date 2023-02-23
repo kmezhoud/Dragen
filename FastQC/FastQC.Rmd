@@ -311,7 +311,7 @@ fastqc %>%
 
 ### `POSITIONAL QUALITY`
 
-```{r, fig.height=8, fig.width=12}
+```{r, fig.height=8, fig.width=12,  warning=FALSE, message=FALSE}
 foo <- fastqc %>%
   filter(Section %in% c( "POSITIONAL QUALITY")) %>%
   mutate(Metric = str_replace(Metric, '% Quantile QV', '')) %>%
@@ -324,6 +324,7 @@ p1 <- foo %>%
   ggplot() +
   aes(x = Positions, y= Value , colour= Quantile) +
   geom_jitter() +
+  geom_smooth() +
   facet_wrap(~Mate, nrow = 2) +
   labs(title= "POSITIONAL QUALITY")+
   ylab("Phred-scale quality")
