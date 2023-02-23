@@ -1,7 +1,7 @@
 Playing around Dragen Server
 ================
 Karim Mezhoud
-2023-02-22
+2023-02-23
 
 <!-- README.md is generated from README.Rmd. Please edit that file! -->
 
@@ -51,7 +51,7 @@ files](https://kmezhoud.github.io/Dragen/extract_installer/extract_installer.htm
 
 ## Create Docker image from .ISO file
 
-The goal is to use/convert ORACLE/CentOS/Cloneziolla .ISO image as a
+The goal is to use/convert ORACLE/CentOS/Clonezilla .ISO image as a
 docker container.
 
 ``` bash
