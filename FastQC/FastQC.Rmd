@@ -103,14 +103,14 @@ fastqc %>%
 
 It is the Total number of reads. Each average Phred-scale quality value is rounded to the nearest integer.
 
-```{r}
+```{r, fig.height=8, fig.width=10}
 foo <- fastqc %>%
   filter(Section %in% c( "READ MEAN QUALITY")) %>%
   mutate( Metric = str_replace(Metric, ' Reads', '')) %>%
   mutate( Metric = str_replace(Metric, 'Q', '')) %>%
   mutate(Metric = as.numeric(Metric)) 
 
-foo %>%
+p1 <- foo %>%
   ggplot() +
   aes(x = Metric , y = Value, colour= Mate) +
   geom_line() +
@@ -121,6 +121,7 @@ foo %>%
   xlab("Mean Sequence Quality")+
   ylab("Count")
 
+p1 %>% ggplotly()
 ```
 
 ###  `POSITIONAL BASE MEAN QUALITY` versus `POSITIONAL BASE CONTENT`
@@ -204,7 +205,7 @@ plotly::plot_ly(data= foo, type = "scatter3d", mode = 'markers',
 
 * Average Phred-scale read mean quality for reads with each `GC` content percentile between $0%$ and $100%$. 
 
-```{r, fig.height=4, fig.width=12}
+```{r, fig.height=8, fig.width=10, warning=FALSE}
 
 foo <- fastqc %>%
   filter(Section %in% c("READ GC CONTENT", "READ GC CONTENT QUALITY")) %>%
@@ -216,18 +217,43 @@ foo <- fastqc %>%
 # mutate(`READ GC CONTENT` = log(`READ GC CONTENT`)) 
 
 
-p1 <- ggplot(foo) +
-  geom_line(aes(x = `GC Count Percentile` , y = `READ GC CONTENT QUALITY`, colour= Mate))
+p1 <- foo %>%
+          ggplot() +
+          geom_line(aes(x = `GC Count Percentile` , y = `READ GC CONTENT QUALITY`, colour= Mate)) +
+          labs("GC Content Quality") +
+          theme(legend.position = "", # c(0.1,0.84), 
+                legend.background = element_rect(fill= "transparent"),
+                legend.key = element_rect(colour = "transparent", fill= "transparent"),
+                legend.text = element_text(colour="black", size=8, face="bold", family="Courier New")) +
+          xlab("GC Count Percentile") +
+          ylab("Read GC Content Quality")
 
-p2 <- ggplot(foo)+
-  geom_line(aes(x = `GC Count Percentile` , y = `READ GC CONTENT`, colour= Mate))+
-  theme(legend.position = "")
+p2 <- foo %>%
+          ggplot() +
+          geom_line(aes(x = `GC Count Percentile` , y = `READ GC CONTENT`, colour= Mate))+
+          theme(legend.position = c(0.1,0.84), 
+                legend.background = element_rect(fill= "transparent"),
+                legend.key = element_rect(colour = "transparent", fill= "transparent"),
+                legend.text = element_text(colour="black", size=8, face="bold", family="Courier New")) +
+          xlab("GC Count Percentile") +
+          ylab("Read GC Content")
 
 
 
-grid.arrange(p1, p2, ncol = 2)
-  
+#grid::grid.draw(rbind(ggplotGrob(p1), ggplotGrob(p2), size = "last"))
+grid.arrange(p1, p2, ncol = 1)
 
+
+p1 <- plot_ly(foo , x= ~`GC Count Percentile`, y = ~`READ GC CONTENT QUALITY`,
+              color = ~Mate, showlegend=FALSE) %>%
+  add_lines()
+
+p2 <- plot_ly(foo , x= ~`GC Count Percentile`, y = ~`READ GC CONTENT`, color = ~Mate) %>%
+  add_lines() %>%
+  layout(legend= list(x=0.05, y=0.5))
+
+
+subplot(p1,p2, nrows = 2, shareX = TRUE, titleX = TRUE, titleY= TRUE)
 ```
 
 
@@ -268,8 +294,6 @@ layout(autosize=TRUE, hovermode= 'compare',
        xaxis = list(autorange = TRUE),
        yaxis = list(autorange = TRUE),
        legend = list(orientation= "v", x = 0.1, y= 0.99))
-
-#p1
 ```
 
 
