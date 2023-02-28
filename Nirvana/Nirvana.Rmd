@@ -621,4 +621,88 @@ library(reticulate)
 DT::datatable(reticulate::py$gene_df)
 ```
 
+# Visualize json file with circos (circular heatmap) layout
+
+This is may be useful to visualize json output from NGS.
+
+## useful packages
+
+* [shiny.gosling](https://github.com/Appsilon/shiny.gosling)
+
+* [radial_heatMap_generator](https://github.com/wjsutton/radial_heatmap_generator)
+
+* [circulize](https://cran.r-project.org/web/packages/circlize/index.html)
+
+* [CoffeeWheel](https://github.com/armish/coffeewheel)
+
+
+```{r  massage=FALSE, warning=FALSE, comment=FALSE, include=FALSE}
+library(data.table)
+if(is.null(system.file(package='shiny.gosling'))){
+remotes::install_github("Appsilon/shiny.react")
+remotes::install_github("Appsilon/shiny.gosling")
+}
+```
+
+* Glimpse the structre of json file used by `shiny.gosling`
+
+```{r}
+jsonlite::fromJSON(txt = "data/server.gosling-lang.org.json") |> str()
+
+```
+
+
+```{r, warning=FALSE, message=FALSE}
+jsonlite::fromJSON(txt = "data/server.gosling-lang.org.json")[[1]][6] |> as.data.frame() |>
+  tidyr::separate(col = row_infos, into = c("espece", "Ref1", "Ref2", "Ref3",
+                                            "Ref4", "Ref5", "Ref6", "Ref7", 
+                                            "Ref8", "Ref9", "Ref11"), sep = "[^[:alnum:] ]+") |>
+    DT::datatable(options = list(scrollX = TRUE,
+                               columnDefs = list(list(className = 'dt-center', targets = "_all"))
+  ),
+  rownames = FALSE)
+
+```
+
+
+```{r, warning=FALSE}
+
+file <- jsonlite::fromJSON("data/server.gosling-lang.org.json")
+
+
+file |>
+  purrr::map(as.data.table) |> 
+  rbindlist(fill=TRUE, idcol = TRUE) |>
+  tidyr::separate(col = row_infos, into = c("info1", "info2", "info3", "info4",
+                                            "info5", "info6", "innfo7", "info8", 
+                                            "info9", "info10", "info11"), sep = "[^[:alnum:] ]+") |>
+  DT::datatable(options = list(scrollX = TRUE,
+                               columnDefs = list(list(className = 'dt-center', targets = "_all"))
+  ),
+  rownames = FALSE)
+
+
+
+
+```
+
+
+
+
+```{r}
+structureVariant <- readr::read_csv("data/structureVariant.csv", show_col_types = FALSE)
+
+structureVariant |>
+    DT::datatable(options = list(scrollX = TRUE,
+                               columnDefs = list(list(className = 'dt-center', targets = "_all"))
+  ),
+  rownames = FALSE)
+```
+
+
+
+```{r, echo=FALSE, runtime: shiny}
+#shiny.gosling::run_example("multiTrackApp")
+```
+
 
